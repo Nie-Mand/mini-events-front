@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.first-blood {
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  right: -50%;
+  bottom: -50%;
+  width: 200%;
+  height: 200vh;
+  background: transparent url('/noise-transparent.png') repeat 0 0;
+  background-repeat: repeat;
+  animation: bg-animation 0.2s infinite, bg-color-animation 1s infinite;
+
+  opacity: 0.9;
+  visibility: visible;
+}
+
+@keyframes bg-color-animation {
+  0% {
+    background-color: rgba(255, 0, 0, 0.9);
+  }
+  5% {
+    background-color: rgba(255, 0, 0, 0);
+  }
+}
+
+@keyframes bg-animation {
+  0% {
+    transform: translate(0, 0);
+  }
+  10% {
+    transform: translate(-5%, -5%);
+  }
+  20% {
+    transform: translate(-10%, 5%);
+  }
+  30% {
+    transform: translate(5%, -10%);
+  }
+  40% {
+    transform: translate(-5%, 15%);
+  }
+  50% {
+    transform: translate(-10%, 5%);
+  }
+  60% {
+    transform: translate(15%, 0);
+  }
+  70% {
+    transform: translate(0, 10%);
+  }
+  80% {
+    transform: translate(-15%, 0);
+  }
+  90% {
+    transform: translate(10%, 5%);
+  }
+  100% {
+    transform: translate(5%, 0);
+  }
+}
+
+@font-face {
+  font-family: 'hacked';
+  src: url(/Hacked-KerX.ttf) format('truetype');
+}
+
+// keyframe that makes text fade in and out
+@keyframes accidently-fade {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.font-hacked {
+  font-family: 'hacked';
+  animation: accidently-fade 1s infinite;
+}
