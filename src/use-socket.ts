@@ -13,7 +13,7 @@ export const useSocket = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   useEffect(() => {
-    const socket = new WebSocket('ws://listener-server-mini.deno.dev/listen')
+    const socket = new WebSocket('wss://listener-server-mini.deno.dev/listen')
     socket.onopen = () => {
       console.log('connected')
     }
