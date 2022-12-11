@@ -39,7 +39,7 @@ export const useSocket = () => {
         audioRef.current?.load()
         audioRef.current?.play()
 
-        await delay(7000)
+        await delay(27000)
 
         setEvents(events => events.filter(e => e.id !== event?.id))
         setEvent(null)
