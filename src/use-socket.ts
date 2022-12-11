@@ -1,41 +1,50 @@
 import { useState, useEffect, useRef } from 'react'
+import { useTaskQueue } from './use-task-queue'
+import { v4 } from 'uuid'
 
 interface Event {
-  id: number
+  id: string
   team: string
   chall: string
 }
+
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
 
 export const useSocket = () => {
   const id = useRef(0)
   const [events, setEvents] = useState<Event[]>([])
   const [event, setEvent] = useState<Event | null>(null)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const { addTask } = useTaskQueue({
+    shouldProcess: true,
+  })
 
   useEffect(() => {
-    const socket = new WebSocket('wss://listener-server-mini.deno.dev/listen')
+    const socket = new WebSocket('ws://localhost:3007/listen')
     socket.onopen = () => {
       console.log('connected')
     }
     socket.onmessage = e => {
-      const data: Event = JSON.parse(e.data)
+      addTask(async () => {
+        const data: Event = JSON.parse(e.data)
 
-      const id = Math.floor(Math.random() * 1000)
+        const id = v4()
 
-      setEvents(events => [
-        ...events,
-        { id: id, team: data.team, chall: data.chall },
-      ])
-      setEvent({ id: id, team: data.team, chall: data.chall })
-      audioRef.current?.load()
-      audioRef.current?.play()
+        setEvents(events => [
+          ...events,
+          { id: id, team: data.team, chall: data.chall },
+        ])
+        setEvent({ id: id, team: data.team, chall: data.chall })
+        audioRef.current?.load()
+        audioRef.current?.play()
 
-      setTimeout(() => {
+        await delay(7000)
+
         setEvents(events => events.filter(e => e.id !== event?.id))
         setEvent(null)
         audioRef.current?.pause()
         audioRef.current?.load()
-      }, 7000)
+      })
     }
 
     return () => {
