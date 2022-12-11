@@ -8,7 +8,7 @@ function getTimeLeft(endTime: Date) {
 
 function App() {
   const { event, audioRef } = useSocket()
-  const count = useCountdown(getTimeLeft(new Date(2022, 11, 11, 17)))
+  const count = useCountdown(getTimeLeft(new Date(2022, 11, 11, 17, 30)))
   const [show, setShow] = useState(true)
 
   return (
