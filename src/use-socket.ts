@@ -9,6 +9,7 @@ interface Event {
 }
 
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms))
+const api = import.meta.env.VITE_API_URL
 
 export const useSocket = () => {
   const id = useRef(0)
@@ -20,7 +21,7 @@ export const useSocket = () => {
   })
 
   useEffect(() => {
-    const socket = new WebSocket('ws://localhost:3007/listen')
+    const socket = new WebSocket(`${api}/listen`)
     socket.onopen = () => {
       console.log('connected')
     }
