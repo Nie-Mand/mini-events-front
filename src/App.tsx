@@ -2,9 +2,13 @@ import { useState } from 'react'
 import { useCountdown } from './use-countdown'
 import { useSocket } from './use-socket'
 
+function getTimeLeft(endTime: Date) {
+  return Math.round((+new Date(endTime) - +new Date()) / 1000)
+}
+
 function App() {
   const { event, audioRef } = useSocket()
-  const count = useCountdown(4000)
+  const count = useCountdown(getTimeLeft(new Date(2022, 11, 11, 4, 5)))
   const [show, setShow] = useState(true)
 
   return (
@@ -30,7 +34,21 @@ function App() {
             </div>
           </div>
         ) : (
-          <h1 className="text-gray-300">{count}</h1>
+          <>
+            <div className="text-change text-center">
+              <div className="text-4xl">Securinets</div> <br />
+              Mini CTF Competition
+              <br />
+              <br />
+              <h1 className="text-gray-300">{count}</h1>
+            </div>
+            <img
+              src="/logo.png"
+              width="120px"
+              height="90px"
+              className="mx-auto"
+            />
+          </>
         )}
       </div>
     </>

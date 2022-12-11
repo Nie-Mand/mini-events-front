@@ -11,6 +11,7 @@ export const useCountdown = (seconds: number) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      if (count === 0) return clearInterval(interval)
       setCount(count - 1)
     }, 1000)
 
